@@ -1,22 +1,24 @@
 #include "SLL.h"
 #include <iostream>
 
+using namespace std;
+
 template<typename T>
-SLL<T>::SLL( const SLL<T>& copy )
+SLL<T>::SLL( const SLL<T>& other )
 {
-	if ( copy.m_count == 0 )
+	if ( other.m_count == 0 )
 	{
 		this->m_count = 0;
 		this->m_first = nullptr;
 	}
 	else
 	{
-		this->m_count = copy.m_count;
-		this->m_first = new Node<T>( copy.m_first->getData(), nullptr );
+		this->m_count = other.m_count;
+		this->m_first = new Node<T>( other.m_first->getData(), nullptr );
 
-		if ( copy.m_count > 1 )
+		if ( other.m_count > 1 )
 		{
-			Node<T>* temp = copy.m_first->getNext();
+			Node<T>* temp = other.m_first->getNext();
 			Node<T>* curr = this->m_first;
 
 			while ( temp != nullptr )
@@ -138,41 +140,51 @@ void SLL<T>::push( const T& element )
 template<typename T>
 T SLL<T>::pop()
 {
+	T result = T();
+
 	if ( this->m_count > 0 )
 	{
-		Node<T>* temp = m_first->getNext();
-		T data = m_first->getData();
-		delete m_first;
-		this->m_first = temp;
+		Node<T>* node = m_first;
+		m_first = node->getNext();
+		result = node->getData();
+		delete node;
+
 		--this->m_count;
-		return data;
 	}
-	return T();
+
+	return result;
 }
 
 template<typename T>
 bool SLL<T>::find( const T& element ) const
 {
-	Node<T>* temp = this->m_first;
-	while ( temp != nullptr )
+	bool found = false;
+
+	Node<T>* currentNode = this->m_first;
+
+	while ( !found && currentNode != nullptr )
 	{
-		if ( temp->getData() == element )
+		if ( currentNode->getData() == element )
 		{
-			return true;
+			found = true;
 		}
-		temp = temp->getNext();
+
+		currentNode = currentNode->getNext();
 	}
-	return false;
+
+	return found;
 }
 
-template<typename T>
-std::ostream& operator<<( std::ostream& out, const SLL<T>& rhs )
+template<typename G>
+ostream& operator<<( ostream& out, const SLL<G>& otherList )
 {
-	Node<T>* temp = rhs.m_first;
-	while ( temp != nullptr )
+	Node<G>* currentNode = otherList.m_first;
+
+	while ( currentNode != nullptr )
 	{
-		out << temp->getData() << " ";
-		temp = temp->getNext();
+		out << currentNode->getData() << " ";
+
+		currentNode = currentNode->getNext();
 	}
 
 	return out;
@@ -181,13 +193,15 @@ std::ostream& operator<<( std::ostream& out, const SLL<T>& rhs )
 template<typename T>
 void SLL<T>::clear()
 {
-	Node<T>* temp;
+	Node<T>* temp = nullptr;
+
 	while ( this->m_first != nullptr )
 	{
 		temp = this->m_first->getNext();
 		delete this->m_first;
 		this->m_first = temp;
 	}
+
 	this->m_first = nullptr;
 	this->m_count = 0;
 }

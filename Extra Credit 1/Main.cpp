@@ -16,39 +16,58 @@ using namespace std;
 
 int main()
 {
-	SLL<int> s1;
-	SLL<int> s2;
-	s1.push( 1 );
-	cout << "s1.push(1)\n" << "s1: " << s1 << "\n\n";
-	s2 = s1;
-	s1.push( 2 );
-	s2.push( 3 );
-	cout << "s2 = s1, s1.push(2), s2.push(3)\n";
-	cout << "s1: " << s1 << "\n";
-	cout << "s2: " << s2 << "\n\n";
+	SLL<int> list1;
+	SLL<int> list2;
 
-	int temp = s1.pop();
-	s2.clear();
+	list1.push( 1 );
+	list1.push( 2 );
+	list1.push( 3 );
+	//list1.push( 4 );
+	//list1.push( 5 );
+	//list1.push( 6 );
+
+	if ( list1.find( 2 ) )
+	{
+		cout << "found";
+	}
+	else
+	{
+		cout << "not found";
+	}
+
+
+	cout << "List 1: " << list1 << "\n";
+	list2 = list1;
+
+	cout << "After assignment operator\n";
+	cout << "List 1: " << list1 << "\n";
+	cout << "List 2: " << list2 << "\n\n";
+
+	SLL<int> s3( list1 );
+	cout << "Copy constructor List 3: " << s3 << "\n";
+
+
+	int temp = list1.pop();
+	cout << endl << temp << endl;
+	cout << list1 << endl;
+
+	list2.clear();
 	cout << "After s1.pop() and s2.clear()\n";
 	cout << "pop: " << temp << "\n";
-	cout << "s1: " << s1 << "\n";
-	cout << "s2: " << s2 << "\n\n";
-
-	SLL<int> s3( s1 );
-	s1.push( 42 );
-	cout << "copy constructor s3: " << s3 << "\n";
+	cout << "s1: " << list1 << "\n";
+	cout << "s2: " << list2 << "\n\n";
 
 	cout << "\noperator= testing: \n";
-	s1.clear();
-	s2.clear();
+	list1.clear();
+	list2.clear();
 	s3.clear();
 
 
-	s1.push( 3 );
-	s2.push( 1 );
-	s1 = s2;
-	cout << "s1: " << s1 << "\n";
-	cout << "s2: " << s2 << "\n";
+	list1.push( 3 );
+	list2.push( 1 );
+	list1 = list2;
+	cout << "s1: " << list1 << "\n";
+	cout << "s2: " << list2 << "\n";
 
 	system( "Pause" );
 	return 0;
