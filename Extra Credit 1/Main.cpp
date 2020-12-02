@@ -18,7 +18,6 @@ using namespace std;
 
 int main()
 {
-
 	SLL<int> s1;
 	SLL<int> s2;
 	s1.push(1);
@@ -40,6 +39,18 @@ int main()
 	SLL<int> s3(s1);
 	s1.push(42);
 	cout << "copy constructor s3: " << s3 << "\n";
+
+	cout << "\noperator= testing: \n";
+	s1.clear();
+	s2.clear();
+	s3.clear();
+
+
+	s1.push(3);
+	s2.push(1);
+	s1 = s2;
+	cout << "s1: " << s1 << "\n";
+	cout << "s2: " << s2 << "\n";
 
 	system("Pause");
 	return 0;
