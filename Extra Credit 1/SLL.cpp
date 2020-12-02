@@ -2,26 +2,26 @@
 #include <iostream>
 
 template<typename T>
-SLL<T>::SLL(const SLL<T>& other)
+SLL<T>::SLL( const SLL<T>& copy )
 {
-	if (other.m_count == 0)
+	if ( copy.m_count == 0 )
 	{
 		this->m_count = 0;
 		this->m_first = nullptr;
 	}
 	else
 	{
-		this->m_count = other.m_count;
-		this->m_first = new Node<T>(other.m_first->getData(), nullptr);
+		this->m_count = copy.m_count;
+		this->m_first = new Node<T>( copy.m_first->getData(), nullptr );
 
-		if (other.m_count > 1)
+		if ( copy.m_count > 1 )
 		{
-			Node<T>* temp = other.m_first->getNext();
+			Node<T>* temp = copy.m_first->getNext();
 			Node<T>* curr = this->m_first;
 
-			while (temp != nullptr)
+			while ( temp != nullptr )
 			{
-				curr->setNext(new Node<T>(temp->getData(), nullptr));
+				curr->setNext( new Node<T>( temp->getData(), nullptr ) );
 				curr = curr->getNext();
 				temp = temp->getNext();
 			}
@@ -30,68 +30,68 @@ SLL<T>::SLL(const SLL<T>& other)
 }
 
 template<typename T>
-SLL<T>& SLL<T>::operator=(const SLL<T>& rhs)
+SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 {
-	if (this != &rhs)
+	if ( this != &rhs )
 	{
-		if (rhs.m_count == 0)
+		if ( rhs.m_count == 0 )
 		{
 			this->clear();
 		}
-		else if (this->m_count == 0)
+		else if ( this->m_count == 0 )
 		{
 			Node<T>* rhsTemp = rhs.m_first;
 			Node<T>* curr = this->m_first;
 			Node<T>* lhsTemp = nullptr;
 
-			while (rhsTemp != nullptr)
+			while ( rhsTemp != nullptr )
 			{
-				if (lhsTemp == nullptr)
+				if ( lhsTemp == nullptr )
 				{
-					curr = this->m_first = new Node<T>(rhsTemp->getData(), nullptr);
+					curr = this->m_first = new Node<T>( rhsTemp->getData(), nullptr );
 				}
 				else
 				{
-					curr = new Node<T>(rhsTemp->getData(), nullptr);
-					lhsTemp->setNext(curr);
+					curr = new Node<T>( rhsTemp->getData(), nullptr );
+					lhsTemp->setNext( curr );
 				}
 				lhsTemp = curr;
 				rhsTemp = rhsTemp->getNext();
 			}
 		}
-		else if (this->m_count > rhs.m_count) //left > right
+		else if ( this->m_count > rhs.m_count ) //left > right
 		{
 			//deep copy [0, rhs.m_count]
 			Node<T>* temp = rhs.m_first;
 			Node<T>* curr = this->m_first;
 			Node<T>* end = curr;
 
-			while (temp != nullptr)
+			while ( temp != nullptr )
 			{
-				curr->setData(temp->getData());
+				curr->setData( temp->getData() );
 				end = curr;
 				temp = temp->getNext();
 				curr = curr->getNext();
 			}
 
 			//free rest of the nodes
-			while (curr != nullptr)
+			while ( curr != nullptr )
 			{
 				temp = curr;
 				curr = curr->getNext();
 				delete temp;
 			}
 
-			end->setNext(nullptr);
+			end->setNext( nullptr );
 		}
-		else if (this->m_count == rhs.m_count) //left == right
+		else if ( this->m_count == rhs.m_count ) //left == right
 		{
 			Node<T>* rhsTemp = rhs.m_first;
 			Node<T>* curr = this->m_first;
 
-			while (rhsTemp != nullptr)
+			while ( rhsTemp != nullptr )
 			{
-				curr->setData(rhsTemp->getData());
+				curr->setData( rhsTemp->getData() );
 				rhsTemp = rhsTemp->getNext();
 				curr = curr->getNext();
 			}
@@ -102,22 +102,22 @@ SLL<T>& SLL<T>::operator=(const SLL<T>& rhs)
 			Node<T>* rhsTemp = rhs.m_first;
 			Node<T>* curr = this->m_first;
 
-			for (int i = 0; i < this->m_count - 1; ++i)
+			for ( int i = 0; i < this->m_count - 1; ++i )
 			{
-				curr->setData(rhsTemp->getData());
+				curr->setData( rhsTemp->getData() );
 				rhsTemp = rhsTemp->getNext();
 				curr = curr->getNext();
 			}
 
-			curr->setData(rhsTemp->getData());
+			curr->setData( rhsTemp->getData() );
 			rhsTemp = rhsTemp->getNext();
 			Node<T>* lhsTemp = curr;
 
 			//insert (this->m_count, rhs.m_count] into this
-			while (rhsTemp != nullptr)
+			while ( rhsTemp != nullptr )
 			{
-				curr = new Node<T>(rhsTemp->getData(), nullptr);
-				lhsTemp->setNext(curr);
+				curr = new Node<T>( rhsTemp->getData(), nullptr );
+				lhsTemp->setNext( curr );
 				lhsTemp = curr;
 				rhsTemp = rhsTemp->getNext();
 			}
@@ -129,16 +129,16 @@ SLL<T>& SLL<T>::operator=(const SLL<T>& rhs)
 }
 
 template<typename T>
-void SLL<T>::push(const T& element)
+void SLL<T>::push( const T& element )
 {
-	this->m_first = new Node<T>(element, this->m_first);
+	this->m_first = new Node<T>( element, this->m_first );
 	++this->m_count;
 }
 
 template<typename T>
 T SLL<T>::pop()
 {
-	if (this->m_count > 0)
+	if ( this->m_count > 0 )
 	{
 		Node<T>* temp = m_first->getNext();
 		T data = m_first->getData();
@@ -151,12 +151,12 @@ T SLL<T>::pop()
 }
 
 template<typename T>
-bool SLL<T>::find(const T& element) const
+bool SLL<T>::find( const T& element ) const
 {
 	Node<T>* temp = this->m_first;
-	while (temp != nullptr)
+	while ( temp != nullptr )
 	{
-		if (temp->getData() == element)
+		if ( temp->getData() == element )
 		{
 			return true;
 		}
@@ -166,10 +166,10 @@ bool SLL<T>::find(const T& element) const
 }
 
 template<typename T>
-std::ostream& operator<<(std::ostream& out, const SLL<T>& rhs)
+std::ostream& operator<<( std::ostream& out, const SLL<T>& rhs )
 {
 	Node<T>* temp = rhs.m_first;
-	while (temp != nullptr)
+	while ( temp != nullptr )
 	{
 		out << temp->getData() << " ";
 		temp = temp->getNext();
@@ -182,7 +182,7 @@ template<typename T>
 void SLL<T>::clear()
 {
 	Node<T>* temp;
-	while (this->m_first != nullptr)
+	while ( this->m_first != nullptr )
 	{
 		temp = this->m_first->getNext();
 		delete this->m_first;
