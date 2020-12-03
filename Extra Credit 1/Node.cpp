@@ -1,3 +1,13 @@
+/*
+	Huang, Yitian
+	Moore, Jaden
+
+	December 1, 2020
+
+	CS A250
+	Extra Credit 1
+*/
+
 #include "Node.h"
 #include <iostream>
 

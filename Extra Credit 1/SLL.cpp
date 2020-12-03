@@ -1,3 +1,13 @@
+/*
+	Huang, Yitian
+	Moore, Jaden
+
+	December 1, 2020
+
+	CS A250
+	Extra Credit 1
+*/
+
 #include "SLL.h"
 #include <iostream>
 
@@ -18,14 +28,14 @@ SLL<T>::SLL( const SLL<T>& other )
 
 		if ( other.m_count > 1 )
 		{
-			Node<T>* temp = other.m_first->getNext();
-			Node<T>* curr = this->m_first;
+			Node<T>* tempNode = other.m_first->getNext();
+			Node<T>* currentNode = this->m_first;
 
-			while ( temp != nullptr )
+			while ( tempNode != nullptr )
 			{
-				curr->setNext( new Node<T>( temp->getData(), nullptr ) );
-				curr = curr->getNext();
-				temp = temp->getNext();
+				currentNode->setNext( new Node<T>( tempNode->getData(), nullptr ) );
+				currentNode = currentNode->getNext();
+				tempNode = tempNode->getNext();
 			}
 		}
 	}
@@ -208,5 +218,3 @@ void SLL<T>::clear()
 		this->m_first = nullptr;
 	}
 }
-
-
