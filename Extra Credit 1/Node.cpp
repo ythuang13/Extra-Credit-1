@@ -1,9 +1,10 @@
 #include "Node.h"
 #include <iostream>
 
-template<typename T>
-std::ostream& operator<<(std::ostream& out, const Node<T>& rhs)
+template<typename G>
+std::ostream& operator<<( std::ostream& out, const Node<G>& otherNode )
 {
-	out << rhs.m_data;
+	out << otherNode.m_data;
+
 	return out;
 }
