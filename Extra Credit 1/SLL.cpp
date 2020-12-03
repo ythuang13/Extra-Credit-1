@@ -193,17 +193,20 @@ ostream& operator<<( ostream& out, const SLL<G>& otherList )
 template<typename T>
 void SLL<T>::clear()
 {
-	Node<T>* temp = nullptr;
-
-	while ( this->m_first != nullptr )
+	if ( this->m_count > 0 )
 	{
-		temp = this->m_first->getNext();
-		delete this->m_first;
-		this->m_first = temp;
-	}
+		Node<T>* currentNode = this->m_first;
 
-	this->m_first = nullptr;
-	this->m_count = 0;
+		while ( currentNode != nullptr )
+		{
+			this->m_first = currentNode->getNext();
+			delete currentNode;
+			currentNode = this->m_first;
+		}
+
+		this->m_count = 0;
+		this->m_first = nullptr;
+	}
 }
 
 
