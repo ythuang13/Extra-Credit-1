@@ -52,23 +52,17 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 		}
 		else if ( this->m_count == 0 )
 		{
-			Node<T>* rhsTemp = rhs.m_first;
-			Node<T>* curr = this->m_first;
-			Node<T>* lhsTemp = nullptr;
+			this->m_first = new Node<T>( rhs.m_first->getData(), nullptr );
 
-			while ( rhsTemp != nullptr )
+			Node<T>* node = this->m_first;
+			Node<T>* currentNode = rhs.m_first->getNext();
+
+			while ( currentNode != nullptr )
 			{
-				if ( lhsTemp == nullptr )
-				{
-					curr = this->m_first = new Node<T>( rhsTemp->getData(), nullptr );
-				}
-				else
-				{
-					curr = new Node<T>( rhsTemp->getData(), nullptr );
-					lhsTemp->setNext( curr );
-				}
-				lhsTemp = curr;
-				rhsTemp = rhsTemp->getNext();
+				node->setNext( new Node<T>( currentNode->getData(), nullptr ) );
+
+				node = node->getNext();
+				currentNode = currentNode->getNext();
 			}
 		}
 		else if ( this->m_count > rhs.m_count ) //left > right
@@ -133,10 +127,11 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 				lhsTemp = curr;
 				rhsTemp = rhsTemp->getNext();
 			}
-
-			this->m_count = rhs.m_count;
 		}
 	}
+
+	this->m_count = rhs.m_count;
+
 	return *this;
 }
 

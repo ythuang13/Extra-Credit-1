@@ -22,9 +22,16 @@ int main()
 	list1.push( 1 );
 	list1.push( 2 );
 	list1.push( 3 );
-	//list1.push( 4 );
-	//list1.push( 5 );
-	//list1.push( 6 );
+	list1.push( 4 );
+	list1.push( 5 );
+	list1.push( 6 );
+
+	cout << "List 1: " << list1 << "\n";
+	list2 = list1;
+
+	cout << "After assignment operator\n";
+	cout << "List 1: " << list1 << "\n";
+	cout << "List 2: " << list2 << "\n\n";
 
 	if ( list1.find( 2 ) )
 	{
@@ -34,14 +41,6 @@ int main()
 	{
 		cout << "not found";
 	}
-
-
-	cout << "List 1: " << list1 << "\n";
-	list2 = list1;
-
-	cout << "After assignment operator\n";
-	cout << "List 1: " << list1 << "\n";
-	cout << "List 2: " << list2 << "\n\n";
 
 	SLL<int> s3( list1 );
 	cout << "Copy constructor List 3: " << s3 << "\n";
