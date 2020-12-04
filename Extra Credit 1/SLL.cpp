@@ -42,20 +42,20 @@ SLL<T>::SLL( const SLL<T>& other )
 }
 
 template<typename T>
-SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
+SLL<T>& SLL<T>::operator=( const SLL<T>& otherList )
 {
-	if ( this != &rhs )
+	if ( this != &otherList )
 	{
-		if ( rhs.m_count == 0 )
+		if ( otherList.m_count == 0 )
 		{
 			this->clear();
 		}
 		else if ( this->m_count == 0 )
 		{
-			this->m_first = new Node<T>( rhs.m_first->getData(), nullptr );
+			this->m_first = new Node<T>( otherList.m_first->getData(), nullptr );
 
 			Node<T>* node = this->m_first;
-			Node<T>* currentNode = rhs.m_first->getNext();
+			Node<T>* currentNode = otherList.m_first->getNext();
 
 			while ( currentNode != nullptr )
 			{
@@ -65,10 +65,9 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 				currentNode = currentNode->getNext();
 			}
 		}
-		else if ( this->m_count > rhs.m_count ) //left > right
+		else if ( this->m_count > otherList.m_count ) // left > right
 		{
-			//deep copy [0, rhs.m_count]
-			Node<T>* temp = rhs.m_first;
+			Node<T>* temp = otherList.m_first;
 			Node<T>* curr = this->m_first;
 			Node<T>* end = curr;
 
@@ -80,7 +79,7 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 				curr = curr->getNext();
 			}
 
-			//free rest of the nodes
+			// Free left over Nodes.
 			while ( curr != nullptr )
 			{
 				temp = curr;
@@ -90,22 +89,22 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 
 			end->setNext( nullptr );
 		}
-		else if ( this->m_count == rhs.m_count ) //left == right
+		else if ( this->m_count == otherList.m_count ) // left == right
 		{
-			Node<T>* rhsTemp = rhs.m_first;
-			Node<T>* curr = this->m_first;
+			Node<T>* currentNode = otherList.m_first;
+			Node<T>* tempNode = this->m_first;
 
-			while ( rhsTemp != nullptr )
+			while ( currentNode != nullptr )
 			{
-				curr->setData( rhsTemp->getData() );
-				rhsTemp = rhsTemp->getNext();
-				curr = curr->getNext();
+				tempNode->setData( currentNode->getData() );
+
+				currentNode = currentNode->getNext();
+				tempNode = tempNode->getNext();
 			}
 		}
-		else //left < right
+		else // left < right
 		{
-			//deep copy [0, this->m_count]
-			Node<T>* rhsTemp = rhs.m_first;
+			Node<T>* rhsTemp = otherList.m_first;
 			Node<T>* curr = this->m_first;
 
 			for ( int i = 0; i < this->m_count - 1; ++i )
@@ -119,7 +118,7 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 			rhsTemp = rhsTemp->getNext();
 			Node<T>* lhsTemp = curr;
 
-			//insert (this->m_count, rhs.m_count] into this
+			// Create new Nodes from remaining list.
 			while ( rhsTemp != nullptr )
 			{
 				curr = new Node<T>( rhsTemp->getData(), nullptr );
@@ -130,7 +129,7 @@ SLL<T>& SLL<T>::operator=( const SLL<T>& rhs )
 		}
 	}
 
-	this->m_count = rhs.m_count;
+	this->m_count = otherList.m_count;
 
 	return *this;
 }
