@@ -11,6 +11,7 @@
 #include "SLL.cpp"
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -18,6 +19,26 @@ int main()
 {
 	SLL<int> list1;
 	SLL<int> list2;
+
+	SLL<string> sList1;
+
+	sList1.push( "one" );
+	sList1.push( "two" );
+	sList1.push( "three" );
+	sList1.push( "four" );
+
+	SLL<string> sList2(sList1);
+
+	cout << "List 1: " << sList1 << "\n";
+	sList2 = sList1;
+
+	cout << "After assignment operator\n";
+	cout << "List 1: " << sList1 << "\n";
+	cout << "List 2: " << sList2 << "\n\n";
+
+	sList2.pop();
+
+	cout << "List 2: " << sList2 << "\n\n";
 
 	list1.push( 1 );
 	list1.push( 2 );
